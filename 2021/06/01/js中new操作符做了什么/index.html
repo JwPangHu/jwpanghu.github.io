@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>hexo学习 | 叫我胖虎</title>
+  <title>js中new操作符做了什么 | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学无止境你可以执行以下命令来创建一篇文章。 1234$ hexo new [layout] &lt;title&gt;$ hexo s 启动服务$ hexo generate 顾名思义，生成静态文章，可以用 hexo g缩写$ hexo deploy 部署文章，可以用hexo d缩写">
+  <meta name="description" content="let p &#x3D; new Perons() 时候隐式的做了什么？  调用函数 自动创建了一个空对象 将创建的对象和this进行绑定 如果构造函数没有显示的返回值，隐式的返回this对象  代码实现12345678910&#x2F;&#x2F; 先创建一个空对象const obj &#x3D; new Object()&#x2F;&#x2F; 然后将空对象的原型指向构造函数的原型obj.__proto__ &#x3D; Persons.prototype&#x2F;&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo学习">
-<meta property="og:url" content="http://example.com/2021/05/07/hexo%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="js中new操作符做了什么">
+<meta property="og:url" content="http://example.com/2021/06/01/js%E4%B8%ADnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="学无止境你可以执行以下命令来创建一篇文章。 1234$ hexo new [layout] &lt;title&gt;$ hexo s 启动服务$ hexo generate 顾名思义，生成静态文章，可以用 hexo g缩写$ hexo deploy 部署文章，可以用hexo d缩写">
+<meta property="og:description" content="let p &#x3D; new Perons() 时候隐式的做了什么？  调用函数 自动创建了一个空对象 将创建的对象和this进行绑定 如果构造函数没有显示的返回值，隐式的返回this对象  代码实现12345678910&#x2F;&#x2F; 先创建一个空对象const obj &#x3D; new Object()&#x2F;&#x2F; 然后将空对象的原型指向构造函数的原型obj.__proto__ &#x3D; Persons.prototype&#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-07T00:50:37.000Z">
-<meta property="article:modified_time" content="2021-05-07T01:04:53.636Z">
+<meta property="article:published_time" content="2021-06-01T10:18:46.000Z">
+<meta property="article:modified_time" content="2021-06-01T10:39:45.734Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -159,28 +159,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hexo学习" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-js中new操作符做了什么" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      hexo学习
+      js中new操作符做了什么
     </h1>
   
 
         
-        <a href="/2021/05/07/hexo%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  	<time datetime="2021-05-07T00:50:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
+        <a href="/2021/06/01/js%E4%B8%ADnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/" class="archive-article-date">
+  	<time datetime="2021-06-01T10:18:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="学无止境"><a href="#学无止境" class="headerlink" title="学无止境"></a>学无止境</h3><p>你可以执行以下命令来创建一篇文章。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new [layout] &lt;title&gt;</span><br><span class="line">$ hexo s 启动服务</span><br><span class="line">$ hexo generate 顾名思义，生成静态文章，可以用 hexo g缩写</span><br><span class="line">$ hexo deploy 部署文章，可以用hexo d缩写</span><br></pre></td></tr></table></figure>
+        <p>let p = new Perons() 时候隐式的做了什么？</p>
+<ol>
+<li>调用函数</li>
+<li>自动创建了一个空对象</li>
+<li>将创建的对象和this进行绑定</li>
+<li>如果构造函数没有显示的返回值，隐式的返回this对象</li>
+</ol>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 先创建一个空对象</span></span><br><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="comment">// 然后将空对象的原型指向构造函数的原型</span></span><br><span class="line">obj.__proto__ = Persons.prototype</span><br><span class="line"><span class="comment">// 变更this指向，使其指向刚创建出来的空对象</span></span><br><span class="line">Persons.call(obj)</span><br><span class="line"><span class="comment">// 最好再返回出去</span></span><br><span class="line"><span class="keyword">return</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -210,17 +216,6 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/web前端//" class="article-tag-list-link color1">web前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -270,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/05/07/hexo%E5%AD%A6%E4%B9%A0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/01/js%E4%B8%ADnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -284,18 +279,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          js宏任务-微任务执行顺序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/04/28/myfirst-blog/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">myfirst-blog</div>
+    <a href="/2021/05/31/js%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js如何判断两个对象是否相等</div>
       <i class="icon-circle-right"></i>
     </a>
   
