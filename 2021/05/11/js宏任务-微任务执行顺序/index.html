@@ -6,21 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>js宏任务-微任务执行顺序 | Hexo</title>
+  <title>js宏任务-微任务执行顺序 | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="概念 宏任务：当前调用栈中执行的代码成为宏任务。（主代码快，定时器等等） 微任务： 当前（此次事件循环中）宏任务执行完，在下一个宏任务开始之前需要执行的任务,可以理解为回调事件。（promise.then，proness.nextTick等等）  执行顺序&#x3D;&gt;先执行script（整体代码）宏任务，&#x3D;&gt;然后查看微任务队列并执行&#x3D;&gt;执行宏任务中的第一个任务&#x3D;&gt;然后再去查看微任务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js宏任务-微任务执行顺序">
 <meta property="og:url" content="http://example.com/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="叫我胖虎">
 <meta property="og:description" content="概念 宏任务：当前调用栈中执行的代码成为宏任务。（主代码快，定时器等等） 微任务： 当前（此次事件循环中）宏任务执行完，在下一个宏任务开始之前需要执行的任务,可以理解为回调事件。（promise.then，proness.nextTick等等）  执行顺序&#x3D;&gt;先执行script（整体代码）宏任务，&#x3D;&gt;然后查看微任务队列并执行&#x3D;&gt;执行宏任务中的第一个任务&#x3D;&gt;然后再去查看微任务">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-11T09:55:48.000Z">
-<meta property="article:modified_time" content="2021-05-31T09:32:53.912Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2021-06-01T03:16:38.591Z">
+<meta property="article:author" content="jwPangHu">
+<meta property="article:tag" content="web前端">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="叫我胖虎" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,7 +48,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1704219071,3761829583&amp;fm=26&amp;gp=0.jpg" class="js-avatar">
+			<img src="/img/head.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -107,7 +108,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1704219071,3761829583&amp;fm=26&amp;gp=0.jpg" class="js-avatar">
+				<img src="/img/head.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -351,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 John Doe
+    		&copy; 2021 jwPangHu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -517,7 +518,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">年轻无为，卖马为生</div>
   	  	
     	</section>
     
