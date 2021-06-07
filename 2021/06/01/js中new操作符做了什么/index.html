@@ -16,7 +16,7 @@
 <meta property="og:description" content="let p &#x3D; new Perons() 时候隐式的做了什么？  调用函数 自动创建了一个空对象 将创建的对象和this进行绑定 如果构造函数没有显示的返回值，隐式的返回this对象  代码实现12345678910&#x2F;&#x2F; 先创建一个空对象const obj &#x3D; new Object()&#x2F;&#x2F; 然后将空对象的原型指向构造函数的原型obj.__proto__ &#x3D; Persons.prototype&#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-01T10:18:46.000Z">
-<meta property="article:modified_time" content="2021-06-01T10:39:45.734Z">
+<meta property="article:modified_time" content="2021-06-07T09:40:46.173Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@
 <li>将创建的对象和this进行绑定</li>
 <li>如果构造函数没有显示的返回值，隐式的返回this对象</li>
 </ol>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 先创建一个空对象</span></span><br><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="comment">// 然后将空对象的原型指向构造函数的原型</span></span><br><span class="line">obj.__proto__ = Persons.prototype</span><br><span class="line"><span class="comment">// 变更this指向，使其指向刚创建出来的空对象</span></span><br><span class="line">Persons.call(obj)</span><br><span class="line"><span class="comment">// 最好再返回出去</span></span><br><span class="line"><span class="keyword">return</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 先创建一个空对象</span></span><br><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="comment">// 然后将空对象的原型指向构造函数的原型</span></span><br><span class="line">obj.__proto__ = Persons.prototype</span><br><span class="line"><span class="comment">// 变更this指向，使其指向刚创建出来的空对象</span></span><br><span class="line">Persons.call(obj)</span><br><span class="line"><span class="comment">// 最后再返回出去</span></span><br><span class="line"><span class="keyword">return</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -278,6 +278,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/06/07/js%E4%B8%AD%E6%96%87%E9%A6%96%E5%AD%97%E6%AF%8D%E6%8E%92%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          js中文首字母排序
+        
+      </div>
+    </a>
   
   
     <a href="/2021/05/31/js%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89/" id="article-nav-older" class="article-nav-link-wrap">
