@@ -159,6 +159,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-js优化网络请求性能之节流" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/">js优化网络请求性能之节流</a>
+    </h1>
+  
+
+        
+        <a href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/" class="archive-article-date">
+  	<time datetime="2021-06-10T10:30:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ol>
+<li>函数节流（throttle）：当持续触发事件时，保证一定时间段内只调用一次事件处理函数。</li>
+<li>应用场景：在前端开发中有一部分用户会频繁的触发事件执行机制，造成性能浪费，很可能会导致界面卡顿，浏览器崩溃。例如：持续触发scroll事件时，并不立即执行handle函数，每隔1000毫秒才会执行一次handle函数。</li>
+</ol>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;div id=<span class="string">&quot;show&quot;</span>&gt;<span class="number">0</span>&lt;/div&gt;</span><br><span class="line">&lt;button id=<span class="string">&quot;btn&quot;</span>&gt;点击&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> oDiv = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;show&#x27;</span>)</span><br><span class="line">    <span class="keyword">let</span> oBtn = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">handler, wait</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> lastTime = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">let</span> nowTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime()</span><br><span class="line">            <span class="keyword">if</span>(nowTime - lastTime &gt; wait) &#123;</span><br><span class="line">                handler.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">                lastTime = nowTime</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">buy</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e)</span><br><span class="line">        oDiv.innerText = <span class="built_in">parseInt</span>(oDiv.innerText) + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    oBtn.onclick = throttle(buy, <span class="number">1000</span>)</span><br><span class="line">&lt;script/&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-js中文首字母排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
