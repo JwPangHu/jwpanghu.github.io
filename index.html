@@ -159,6 +159,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/">js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
+  	<time datetime="2021-06-21T10:03:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.isPrototypeOf 是用来测试一个对象是否存在于另一个对象的原型链上，或者说是否是另一个对象的原型。</p>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = &#123;&#125;   <span class="comment">//定义一个对象</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">Object</span>.create(p)  <span class="comment">//使其刚创建的对象a作为b对象的原型</span></span><br><span class="line"><span class="built_in">console</span>.log( p.isPrototypeOf(o) ) <span class="comment">//=&gt;true  o继承p</span></span><br><span class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span>.prototype.isPrototypeOf(p) ) <span class="comment">//=&gt; true 所有通过对象直接量创建的对象都使用Object.prototype作为他们的原型</span></span><br></pre></td></tr></table></figure>
+
+
+<p>简单来说就是：</p>
+<ol>
+<li>通过Object.create()创建的对象使用第一个参数作为原型</li>
+<li>通过对象直接量的对象使用Object.prototype作为原型</li>
+<li>通过new创建的对象使用构造函数的prototype属性作为原型</li>
+</ol>
+<hr>
+<p>2.instanceof 是用来检测左侧的这个对象是否是右侧构造函数的实例。</p>
+<h4 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Date</span>;<span class="comment">//=&gt;true  d是Date的实例</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Object</span>;<span class="comment">//=&gt;true 所有对象都是Object的实例</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>3.hasOwnProperty 该方法会返回一个布尔值，表明对象在自身属性中是否具有某属性。</p>
+<h4 id="用法-2"><a href="#用法-2" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">o.a = <span class="string">&#x27;Royal Never GiveUp&#x27;</span>;</span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;a&#x27;</span>);    <span class="comment">// 返回 true</span></span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;toString&#x27;</span>);   <span class="comment">// 返回 false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而且 hasOwnProperty 是严格限制于自身可枚举项目，继承来的属性会被忽略。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-js优化网络请求性能之节流" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -843,81 +933,10 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/28/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/28/hello-world/" class="archive-article-date">
-  	<time datetime="2021-04-28T01:10:33.240Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/28/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 

@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | 叫我胖虎</title>
+  <title>js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍 | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="叫我胖虎的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="叫我胖虎">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="1.isPrototypeOf 是用来测试一个对象是否存在于另一个对象的原型链上，或者说是否是另一个对象的原型。 用法12345const a &#x3D; &amp;#123;&amp;#125;   &#x2F;&#x2F;定义一个对象const b &#x3D; Object.create(p)  &#x2F;&#x2F;使其刚创建的对象a作为b对象的原型console.log( p.isPrototypeOf(o) ) &#x2F;&#x2F;&#x3D;&gt;true  o继承pconso">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍">
+<meta property="og:url" content="http://example.com/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="叫我胖虎的博客">
+<meta property="og:description" content="1.isPrototypeOf 是用来测试一个对象是否存在于另一个对象的原型链上，或者说是否是另一个对象的原型。 用法12345const a &#x3D; &amp;#123;&amp;#125;   &#x2F;&#x2F;定义一个对象const b &#x3D; Object.create(p)  &#x2F;&#x2F;使其刚创建的对象a作为b对象的原型console.log( p.isPrototypeOf(o) ) &#x2F;&#x2F;&#x3D;&gt;true  o继承pconso">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-21T10:03:02.000Z">
+<meta property="article:modified_time" content="2021-06-21T10:43:13.213Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -157,37 +159,73 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
+
+        
+        <a href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
   	<time datetime="2021-06-21T10:03:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/">js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.isPrototypeOf 是用来测试一个对象是否存在于另一个对象的原型链上，或者说是否是另一个对象的原型。</p>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = &#123;&#125;   <span class="comment">//定义一个对象</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">Object</span>.create(p)  <span class="comment">//使其刚创建的对象a作为b对象的原型</span></span><br><span class="line"><span class="built_in">console</span>.log( p.isPrototypeOf(o) ) <span class="comment">//=&gt;true  o继承p</span></span><br><span class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span>.prototype.isPrototypeOf(p) ) <span class="comment">//=&gt; true 所有通过对象直接量创建的对象都使用Object.prototype作为他们的原型</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+
+<p>简单来说就是：</p>
+<ol>
+<li>通过Object.create()创建的对象使用第一个参数作为原型</li>
+<li>通过对象直接量的对象使用Object.prototype作为原型</li>
+<li>通过new创建的对象使用构造函数的prototype属性作为原型</li>
+</ol>
+<hr>
+<p>2.instanceof 是用来检测左侧的这个对象是否是右侧构造函数的实例。</p>
+<h4 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Date</span>;<span class="comment">//=&gt;true  d是Date的实例</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Object</span>;<span class="comment">//=&gt;true 所有对象都是Object的实例</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>3.hasOwnProperty 该方法会返回一个布尔值，表明对象在自身属性中是否具有某属性。</p>
+<h4 id="用法-2"><a href="#用法-2" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">o.a = <span class="string">&#x27;Royal Never GiveUp&#x27;</span>;</span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;a&#x27;</span>);    <span class="comment">// 返回 true</span></span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;toString&#x27;</span>);   <span class="comment">// 返回 false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而且 hasOwnProperty 是严格限制于自身可枚举项目，继承来的属性会被忽略。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -200,340 +238,103 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/" class="archive-article-date">
-  	<time datetime="2021-06-10T10:30:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-10</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js优化网络请求性能之节流</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/06/10/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E8%8A%82%E6%B5%81/">js优化网络请求性能之节流</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/06/07/js%E4%B8%AD%E6%96%87%E9%A6%96%E5%AD%97%E6%AF%8D%E6%8E%92%E5%BA%8F/" class="archive-article-date">
-  	<time datetime="2021-06-07T10:20:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-07</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/06/07/js%E4%B8%AD%E6%96%87%E9%A6%96%E5%AD%97%E6%AF%8D%E6%8E%92%E5%BA%8F/">js中文首字母排序</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/06/01/js%E4%B8%ADnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/" class="archive-article-date">
-  	<time datetime="2021-06-01T10:18:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/06/01/js%E4%B8%ADnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/">js中new操作符做了什么</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/31/js%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89/" class="archive-article-date">
-  	<time datetime="2021-05-31T09:32:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/31/js%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89/">js如何判断两个对象是否相等</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/24/js%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-05-24T06:17:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/24/js%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E5%AE%9E%E7%8E%B0/">js快速排序实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/20/Vue%E4%B8%ADwatch%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-05-20T00:53:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/20/Vue%E4%B8%ADwatch%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Vue中watch的简单实现原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue//" class="article-tag-list-link color4">Vue</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" class="archive-article-date">
-  	<time datetime="2021-05-11T09:55:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">js宏任务-微任务执行顺序</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/web前端//" class="article-tag-list-link color1">web前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/07/hexo%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  	<time datetime="2021-05-07T00:50:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/07/hexo%E5%AD%A6%E4%B9%A0/">hexo学习</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/web前端//" class="article-tag-list-link color1">web前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/04/28/myfirst-blog/" class="archive-article-date">
-  	<time datetime="2021-04-28T03:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/28/myfirst-blog/">myfirst-blog</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -557,8 +358,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
