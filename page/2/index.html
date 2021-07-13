@@ -159,6 +159,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-js宏任务-微任务执行顺序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">js宏任务-微任务执行顺序</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" class="archive-article-date">
+  	<time datetime="2021-05-11T09:55:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ol>
+<li>宏任务：当前调用栈中执行的代码成为宏任务。（主代码快，定时器等等）</li>
+<li>微任务： 当前（此次事件循环中）宏任务执行完，在下一个宏任务开始之前需要执行的任务,可以理解为回调事件。（promise.then，proness.nextTick等等）</li>
+</ol>
+<h3 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h3><p>=&gt;先执行script（整体代码）宏任务，<br>=&gt;然后查看微任务队列并执行<br>=&gt;执行宏任务中的第一个任务<br>=&gt;然后再去查看微任务队列并执行…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise1&#x27;</span>)</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout2&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout1&#x27;</span>)</span><br><span class="line">    Promis.resolve(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;promise2&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>执行的结果为promise1、setTimeout1、promise2、setTimeout2</p>
+<ul>
+<li>一开始执行的是整体代码（这里属于宏任务），然后会去查看微任务队列里面是否存在微任务，当前有且只有一个微任务，执行输出promise1，同时以为微任务的执行会生成要一个宏任务setTimeout2（注意：这个时候有两个宏任务，微任务有且只能有一个）。</li>
+<li>然后去看宏任务队列，宏任务setTimeout1要在setTimeout2之前，所以先去执行setTimeout1，然后输出setTimeout1，同时犹豫setTimeout1的执行，生成了微任务promise2。</li>
+<li>第三步去查看微任务队列执行微任务promise2，然后输出promise2。</li>
+<li>最后执行完微任务后去查看宏任务队列执行setTimeout2，然后输出setTimeout2</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/web前端//" class="article-tag-list-link color1">web前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hexo学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
