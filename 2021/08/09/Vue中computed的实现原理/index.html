@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Nodejs链接Mysql | 叫我胖虎</title>
+  <title>Vue中computed的实现原理 | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="步骤：  安装 npm install mysql –save 创建数据库链接对象 获取数据存储的数据  1234567891011121314151617181920212223242526272829303132333435const express &#x3D; require(&amp;#x27;express&amp;#x27;)const mysql &#x3D; require(&amp;#x27;mysql&amp;#x27;)co">
+  <meta name="description" content="在使用vue的开发中经常会使用到 computed，为我们开发带来了很大的便利，利用computed能更大程度上简化我们的代码，他和Vue中另一个api侦听器 watch比较，在某些方面比较相近的。 用法例子123456789101112&amp;#123;&amp;#123;fullName&amp;#125;&amp;#125;new Vue(&amp;#123;    data: &amp;#123;        firstName:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nodejs链接Mysql">
-<meta property="og:url" content="http://example.com/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/index.html">
+<meta property="og:title" content="Vue中computed的实现原理">
+<meta property="og:url" content="http://example.com/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="步骤：  安装 npm install mysql –save 创建数据库链接对象 获取数据存储的数据  1234567891011121314151617181920212223242526272829303132333435const express &#x3D; require(&amp;#x27;express&amp;#x27;)const mysql &#x3D; require(&amp;#x27;mysql&amp;#x27;)co">
+<meta property="og:description" content="在使用vue的开发中经常会使用到 computed，为我们开发带来了很大的便利，利用computed能更大程度上简化我们的代码，他和Vue中另一个api侦听器 watch比较，在某些方面比较相近的。 用法例子123456789101112&amp;#123;&amp;#123;fullName&amp;#125;&amp;#125;new Vue(&amp;#123;    data: &amp;#123;        firstName:">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-23T09:16:14.000Z">
-<meta property="article:modified_time" content="2021-07-23T09:23:36.782Z">
+<meta property="article:published_time" content="2021-08-09T09:29:08.000Z">
+<meta property="article:modified_time" content="2021-08-12T09:58:46.586Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -159,33 +159,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Nodejs链接Mysql" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Vue中computed的实现原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Nodejs链接Mysql
+      Vue中computed的实现原理
     </h1>
   
 
         
-        <a href="/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" class="archive-article-date">
-  	<time datetime="2021-07-23T09:16:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
+        <a href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-08-09T09:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>步骤：</p>
+        <p>在使用vue的开发中经常会使用到 computed，为我们开发带来了很大的便利，利用computed能更大程度上简化我们的代码，他和Vue中另一个api侦听器 watch比较，在某些方面比较相近的。</p>
+<h4 id="用法例子"><a href="#用法例子" class="headerlink" title="用法例子"></a>用法例子</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;fullName&#125;&#125;</span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">        firstName: <span class="string">&#x27;jw&#x27;</span>,</span><br><span class="line">        lastName: <span class="string">&#x27;panghu&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        <span class="function"><span class="title">fullName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.firstName + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.lastName</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>不需要再模板里直接去计算undefined undefined，不要页面中使用大量复杂的逻辑表达式处理数据（别人一看，心里一万头🐎奔过），这样会让模板本身过重，会对后期页面维护造成影响。computed主要也是为了解决类似的问题。</p>
+<blockquote>
+<p>computed与watch的区别</p>
+</blockquote>
 <ol>
-<li>安装 npm install mysql –save</li>
-<li>创建数据库链接对象</li>
-<li>获取数据存储的数据</li>
+<li>computed 是计算一个新的属性,并且会把这个属性挂在到vue实例上，watch是监控实例上已有的属性变化。所以以可以监控computed</li>
+<li>computed本质是惰性的，具有缓存性，第一次访问时会计算值，其他时候会缓存下来，比如一个多出使用computed同一个属性，也只会执行一次，只有当他依赖的属性发生变化时才会重新执行。而watch只要当数据变化，就会执行相对应的函数。</li>
+<li>从使用场景上来说，computed适用一个数据被多个数据影响的情况，watch适用一个数据的变化去影响到多个数据。</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">&#x27;mysql&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> PORT = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> db = mysql.createConnection(&#123;</span><br><span class="line">    host: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">    password: <span class="string">&quot;zhanghu123456.&quot;</span>,</span><br><span class="line">    database: <span class="string">&#x27;zhanghu&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">db.connect(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;数据库链接成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    db.query(<span class="string">&#x27;SELECT * FROM user_info&#x27;</span>, <span class="function">(<span class="params">err, rows, fields</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(rows[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            <span class="keyword">throw</span> err;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        res.json(rows)</span><br><span class="line">    &#125;)</span><br><span class="line">   </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(PORT, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`app is runing at port <span class="subst">$&#123;PORT&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -220,7 +225,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/js、Nodejs//" class="article-tag-list-link color5">js、Nodejs</a>
+        			<a href="/categories/Vue//" class="article-tag-list-link color4">Vue</a>
         		</li>
       		
 		</ul>
@@ -275,7 +280,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +294,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Vue中computed的实现原理
+          Vue中自定义指令，在图片未完成加载前用随机背景色占位
         
       </div>
     </a>
   
   
-    <a href="/2021/07/20/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">文件上传</div>
+    <a href="/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Nodejs链接Mysql</div>
       <i class="icon-circle-right"></i>
     </a>
   

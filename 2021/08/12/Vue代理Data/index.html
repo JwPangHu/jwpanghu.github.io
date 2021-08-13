@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Nodejs链接Mysql | 叫我胖虎</title>
+  <title>Vue代理Data | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="步骤：  安装 npm install mysql –save 创建数据库链接对象 获取数据存储的数据  1234567891011121314151617181920212223242526272829303132333435const express &#x3D; require(&amp;#x27;express&amp;#x27;)const mysql &#x3D; require(&amp;#x27;mysql&amp;#x27;)co">
+  <meta name="description" content="在使用Vue组件内的data数据的时候是怎么访问到的？最早以为是遍历复制。查看源码后才知道是通过一个代理函数代理到data上。让我们可以直接使用this.xxx访问，而不需要this.data.xxx。  实例使用initData函数初始化数据1234567891011function initData() &amp;#123;    var data &#x3D; vm.$options.data    var">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nodejs链接Mysql">
-<meta property="og:url" content="http://example.com/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/index.html">
+<meta property="og:title" content="Vue代理Data">
+<meta property="og:url" content="http://example.com/2021/08/12/Vue%E4%BB%A3%E7%90%86Data/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="步骤：  安装 npm install mysql –save 创建数据库链接对象 获取数据存储的数据  1234567891011121314151617181920212223242526272829303132333435const express &#x3D; require(&amp;#x27;express&amp;#x27;)const mysql &#x3D; require(&amp;#x27;mysql&amp;#x27;)co">
+<meta property="og:description" content="在使用Vue组件内的data数据的时候是怎么访问到的？最早以为是遍历复制。查看源码后才知道是通过一个代理函数代理到data上。让我们可以直接使用this.xxx访问，而不需要this.data.xxx。  实例使用initData函数初始化数据1234567891011function initData() &amp;#123;    var data &#x3D; vm.$options.data    var">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-23T09:16:14.000Z">
-<meta property="article:modified_time" content="2021-07-23T09:23:36.782Z">
+<meta property="article:published_time" content="2021-08-12T09:50:26.000Z">
+<meta property="article:modified_time" content="2021-08-12T11:00:17.365Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -159,33 +159,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Nodejs链接Mysql" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Vue代理Data" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Nodejs链接Mysql
+      Vue代理Data
     </h1>
   
 
         
-        <a href="/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" class="archive-article-date">
-  	<time datetime="2021-07-23T09:16:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
+        <a href="/2021/08/12/Vue%E4%BB%A3%E7%90%86Data/" class="archive-article-date">
+  	<time datetime="2021-08-12T09:50:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>步骤：</p>
+        <p>在使用Vue组件内的data数据的时候是怎么访问到的？最早以为是遍历复制。查看源码后才知道是通过一个<strong>代理</strong>函数代理到data上。让我们可以直接使用this.xxx访问，而不需要this.data.xxx。</p>
 <ol>
-<li>安装 npm install mysql –save</li>
-<li>创建数据库链接对象</li>
-<li>获取数据存储的数据</li>
+<li>实例使用initData函数初始化数据<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data = vm.$options.data</span><br><span class="line">    <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(data)</span><br><span class="line">    <span class="keyword">var</span> len = keys.length</span><br><span class="line">    data = vm._data = (<span class="keyword">typeof</span> data === <span class="string">&#x27;function&#x27;</span> ? data.call(vm) : data) || &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        proxy(vm, <span class="string">&#x27;_data &#x27;</span>, vm._data[i])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>将数据代理到this上<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params">target, data, key</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(target, key, &#123;</span><br><span class="line">        <span class="function"><span class="title">get</span>(<span class="params"></span>)</span> &#123;            </span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>[data][key]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">set</span>(<span class="params">val</span>)</span> &#123;            </span><br><span class="line">            <span class="built_in">this</span>[data][key] = val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">&#x27;mysql&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> PORT = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> db = mysql.createConnection(&#123;</span><br><span class="line">    host: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">    password: <span class="string">&quot;zhanghu123456.&quot;</span>,</span><br><span class="line">    database: <span class="string">&#x27;zhanghu&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">db.connect(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;数据库链接成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    db.query(<span class="string">&#x27;SELECT * FROM user_info&#x27;</span>, <span class="function">(<span class="params">err, rows, fields</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(rows[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            <span class="keyword">throw</span> err;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        res.json(rows)</span><br><span class="line">    &#125;)</span><br><span class="line">   </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(PORT, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`app is runing at port <span class="subst">$&#123;PORT&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -220,7 +219,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/js、Nodejs//" class="article-tag-list-link color5">js、Nodejs</a>
+        			<a href="/categories/Vue//" class="article-tag-list-link color4">Vue</a>
         		</li>
       		
 		</ul>
@@ -275,7 +274,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/12/Vue%E4%BB%A3%E7%90%86Data/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +288,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Vue中computed的实现原理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/07/20/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">文件上传</div>
+    <a href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Vue中自定义指令，在图片未完成加载前用随机背景色占位</div>
       <i class="icon-circle-right"></i>
     </a>
   
