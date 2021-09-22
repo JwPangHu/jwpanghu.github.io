@@ -159,6 +159,109 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-原生js实现数组方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/22/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">原生js实现数组方法</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/22/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2021-09-22T09:29:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="用原生js实现下es6里面的数组方法。"><a href="#用原生js实现下es6里面的数组方法。" class="headerlink" title="用原生js实现下es6里面的数组方法。"></a>用原生js实现下es6里面的数组方法。</h3><blockquote>
+<p>1.实现forEach</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">Array</span>.prototype.myForEach = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _arr = <span class="built_in">this</span>,</span><br><span class="line">        len = _arr.length,</span><br><span class="line">        params = <span class="built_in">arguments</span>[<span class="number">1</span>] || <span class="built_in">window</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        func.apply(params, [_arr[i], i, _arr])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">arr.myForEach(<span class="function"><span class="keyword">function</span>(<span class="params">item, index ,self</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item,index, self, <span class="built_in">this</span>) </span><br><span class="line">&#125;, &#123;<span class="attr">p</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment">// a 0 [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] &#123;p: 1&#125;</span></span><br><span class="line"><span class="comment">// b 1 [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] &#123;p: 1&#125;</span></span><br><span class="line"><span class="comment">// b 2 [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] &#123;p: 1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>2.实现filter方法, 不改变原数组并返回一个新数组。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">Array</span>.prototype.myFilter = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _arr = <span class="built_in">this</span>,</span><br><span class="line">        len = _arr.length,</span><br><span class="line">        params = <span class="built_in">arguments</span>[<span class="number">1</span>] || <span class="built_in">window</span></span><br><span class="line">        newArr = [];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            func.apply(params, [_arr[i], i, _arr]) ? newArr.push(_arr[i]) : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> newArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fArr = arr.myFilter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index ,self</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;, &#123;<span class="attr">p</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;过滤后的数组&#x27;</span>,fArr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span></span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>3.实现map方法, 不改变原数组并返回一个新数组。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">Array</span>.prototype.myMap = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _arr = <span class="built_in">this</span>,</span><br><span class="line">        len = _arr.length,</span><br><span class="line">        params = <span class="built_in">arguments</span>[<span class="number">1</span>] || <span class="built_in">window</span></span><br><span class="line">        newArr = [];</span><br><span class="line">        <span class="comment">//深拷贝一下，防止数组内的引用值被修改</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">let</span> res = func.apply(params, [ deepClone( _arr[i]), i, _arr])</span><br><span class="line">            newArr.push( res) </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> newArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mArr = arr.myMap(<span class="function"><span class="keyword">function</span>(<span class="params">item, index ,self</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;o&#x27;</span> + item</span><br><span class="line">&#125;, &#123;<span class="attr">p</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;map&#x27;</span>,mArr)</span><br><span class="line"><span class="comment">// [&quot;oa&quot;, &quot;ob&quot;, &quot;oc&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>4.实现every方法，执行结果返回一个布尔值，数组中每一项为true，才返回true，反之返回false。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;a1&#x27;</span>,<span class="string">&#x27;b1&#x27;</span>,<span class="string">&#x27;c1&#x27;</span>]</span><br><span class="line"><span class="built_in">Array</span>.prototype.myEvery = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _arr = <span class="built_in">this</span>,</span><br><span class="line">        len = _arr.length,</span><br><span class="line">        params = <span class="built_in">arguments</span>[<span class="number">1</span>] || <span class="built_in">window</span></span><br><span class="line">        isEvery = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">let</span> res = func.apply(params, [_arr[i], i, _arr])</span><br><span class="line">            <span class="keyword">if</span>(!res) &#123;</span><br><span class="line">                isEvery = <span class="literal">false</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> isEvery</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> eArr = arr.myEvery(<span class="function"><span class="keyword">function</span>(<span class="params">item, index ,self</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(index)</span><br><span class="line">    <span class="keyword">return</span> item == <span class="string">&#x27;a1&#x27;</span></span><br><span class="line">&#125;, &#123;<span class="attr">p</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;myEvery&#x27;</span>,eArr)</span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/22/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-自己实现下Promis-all" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -880,99 +983,9 @@
 
 
   
-    <article id="post-js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/">js中isPrototypeOf、instanceof、hasOwnProperty函数用法与介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2021-06-21T10:03:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.isPrototypeOf 是用来测试一个对象是否存在于另一个对象的原型链上，或者说是否是另一个对象的原型。</p>
-<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = &#123;&#125;   <span class="comment">//定义一个对象</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">Object</span>.create(p)  <span class="comment">//使其刚创建的对象a作为b对象的原型</span></span><br><span class="line"><span class="built_in">console</span>.log( p.isPrototypeOf(o) ) <span class="comment">//=&gt;true  o继承p</span></span><br><span class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span>.prototype.isPrototypeOf(p) ) <span class="comment">//=&gt; true 所有通过对象直接量创建的对象都使用Object.prototype作为他们的原型</span></span><br></pre></td></tr></table></figure>
-
-
-<p>简单来说就是：</p>
-<ol>
-<li>通过Object.create()创建的对象使用第一个参数作为原型</li>
-<li>通过对象直接量的对象使用Object.prototype作为原型</li>
-<li>通过new创建的对象使用构造函数的prototype属性作为原型</li>
-</ol>
-<hr>
-<p>2.instanceof 是用来检测左侧的这个对象是否是右侧构造函数的实例。</p>
-<h4 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Date</span>;<span class="comment">//=&gt;true  d是Date的实例</span></span><br><span class="line">d <span class="keyword">instanceof</span> <span class="built_in">Object</span>;<span class="comment">//=&gt;true 所有对象都是Object的实例</span></span><br></pre></td></tr></table></figure>
-<hr>
-<p>3.hasOwnProperty 该方法会返回一个布尔值，表明对象在自身属性中是否具有某属性。</p>
-<h4 id="用法-2"><a href="#用法-2" class="headerlink" title="用法"></a>用法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">o.a = <span class="string">&#x27;Royal Never GiveUp&#x27;</span>;</span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;a&#x27;</span>);    <span class="comment">// 返回 true</span></span><br><span class="line">o.hasOwnProperty(<span class="string">&#x27;toString&#x27;</span>);   <span class="comment">// 返回 false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>而且 hasOwnProperty 是严格限制于自身可枚举项目，继承来的属性会被忽略。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/21/js%E4%B8%ADisPrototypeOf%E3%80%81instanceof%E3%80%81hasOwnProperty%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%E4%B8%8E%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
