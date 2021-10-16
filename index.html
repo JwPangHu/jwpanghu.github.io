@@ -159,6 +159,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-nodemon核心原理实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/14/nodemon%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0/">nodemon核心原理实现</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/14/nodemon%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2021-10-14T10:39:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="nodemon是一种工具，用于自动检测目录中文件变化并自动重新启动应用程序，非常便于我们的开发。也是在b站上看到大佬的视频，跟着学习记录一下简单实现的原理。"><a href="#nodemon是一种工具，用于自动检测目录中文件变化并自动重新启动应用程序，非常便于我们的开发。也是在b站上看到大佬的视频，跟着学习记录一下简单实现的原理。" class="headerlink" title="nodemon是一种工具，用于自动检测目录中文件变化并自动重新启动应用程序，非常便于我们的开发。也是在b站上看到大佬的视频，跟着学习记录一下简单实现的原理。"></a>nodemon是一种工具，用于自动检测目录中文件变化并自动重新启动应用程序，非常便于我们的开发。也是在b站上看到大佬的视频，跟着学习记录一下简单实现的原理。</h5><p>实现思路</p>
+<ol>
+<li>监控文件内容变化</li>
+<li>自动重启服务<blockquote>
+<p>实现核心是 chokidar， 这个库可以监听到文件的变化。</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">chokidar.watch([<span class="string">&#x27;main.js&#x27;</span>]).on(<span class="string">&#x27;all&#x27;</span>, <span class="function">(<span class="params">e, path</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;事件类型：&#x27;</span>,e,<span class="string">&#x27;路径：&#x27;</span>, path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>文件变化监听后，第一步完成，就要执行第二步，也就是自动重启服务。child_process是node自带的一个子进程的库，使用里面的spawn方法可以创建子进程，帮我们执行node命令。</p>
+</blockquote>
+<p>spawn可以传递三个参数<br>第一个表示执行node命令</p>
+<p>第二个是需要执行的文件，（是个数组）</p>
+<p>第三个设置输入和输出</p>
+<p>process.stdin：输入</p>
+<p>​process.stdout：输出</p>
+<p>​process.stderr： 错误处理</p>
+<blockquote>
+<p>spawn 会返回一个子进程，如果childProcess存在，则把子进程杀死。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">childProcess &amp;&amp; childProcess.kill()  <span class="comment">//如果childProcess存在，则把子进程杀死</span></span><br><span class="line">childProcess = spawn(<span class="string">&#x27;node&#x27;</span>, [<span class="string">&#x27;main.js&#x27;</span>], &#123;</span><br><span class="line">    stdio: [process.stdio, process.stdout, process.stderr]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="完整代码："><a href="#完整代码：" class="headerlink" title="完整代码："></a>完整代码：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">&#x27;chokidar&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; exec, spawn &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> childProcess = <span class="literal">null</span></span><br><span class="line"><span class="keyword">let</span> debounceReStart = debounce(reStart, <span class="number">1000</span>)</span><br><span class="line">chokidar.watch(<span class="string">&#x27;main.js&#x27;</span>).on(<span class="string">&#x27;all&#x27;</span>, <span class="function">(<span class="params">e, path</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;事件类型：&#x27;</span>,e,<span class="string">&#x27;路径：&#x27;</span>, path)</span><br><span class="line">    </span><br><span class="line">    debounceReStart()</span><br><span class="line">    <span class="comment">// reStart()</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reStart</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;重启服务。。。。。。&#x27;</span>)</span><br><span class="line">    childProcess &amp;&amp; childProcess.kill()</span><br><span class="line">    childProcess = spawn(<span class="string">&#x27;node&#x27;</span>, [<span class="string">&#x27;main.js&#x27;</span>], &#123;</span><br><span class="line">        stdio: [process.stdio, process.stdout, process.stderr]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;      <span class="comment">//增加防抖 防止用户疯狂保存 造成的性能浪费</span></span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> arg = <span class="built_in">arguments</span></span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            fn.apply(<span class="built_in">this</span>, arg)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Nodejs//" class="article-tag-list-link color2">Nodejs</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/14/nodemon%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-原生js实现数组方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -873,92 +970,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/07/08/js%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%80%A7%E8%83%BD%E4%B9%8B%E9%98%B2%E6%8A%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-js深拷贝" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/22/js%E6%B7%B1%E6%8B%B7%E8%B4%9D/">js深拷贝</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/22/js%E6%B7%B1%E6%8B%B7%E8%B4%9D/" class="archive-article-date">
-  	<time datetime="2021-06-22T09:32:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>第1种方法<br>js原生实现</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">origin, target = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> toStr = <span class="built_in">Object</span>.prototype.toString,</span><br><span class="line">        arrStr = <span class="string">&quot;[object Array]&quot;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> origin) &#123;</span><br><span class="line">        <span class="keyword">if</span>(origin.hasOwnProperty(key)) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">typeof</span>(origin[key]) === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span>(toStr.call(origin[key] === arrStr)) &#123;</span><br><span class="line">                    target[key] = []</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    target[key] = &#123;&#125;</span><br><span class="line">                &#125;</span><br><span class="line">                deepClone(origin[key], target[key])</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = origin[key]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="keyword">return</span> target</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> obj1 = &#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = deepClone(obj1)</span><br><span class="line">obj1.a = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1,obj2) <span class="comment">// &#123;a: 3, b: 2&#125;、&#123;a: 1, b: 2&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>第2种方法<br>通过JSON.parse(JSON.stringify(obj))</p>
-<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj1))</span><br><span class="line">obj1.a = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2) <span class="comment">//&#123;a:1, b:2&#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意：这种方法有个缺点，他不能实现对象中方法的深拷贝。</p>
-<p>第3种方法<br>通过Object.assign()拷贝，MDN上说的是将所有可枚举的属性从一个或多个对象身上复制到‘目标对象’，而且它将返回目标对象。</p>
-<h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: &#123;<span class="attr">c</span>: <span class="number">2</span>&#125;&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = <span class="built_in">Object</span>.assign(&#123;&#125;, obj1)</span><br><span class="line"><span class="built_in">console</span>.log(obj2)     <span class="comment">//&#123;a: 1, b: &#123;c: 2&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">obj1.b.c = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2)     <span class="comment">//&#123;a: 1, b: &#123;c: 3&#125;&#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意：这种方法也有个缺点，当对象只有一层属性的时候为深拷贝，超过一层就是浅拷贝。</p>
-<p>第4种方法<br>再有就是通过数组方法，比如slice(index1, index2), concat(arr1, arr2,…)。</p>
-<h4 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr1 = [<span class="number">0</span>, <span class="number">1</span>, [<span class="number">3</span>]]</span><br><span class="line"><span class="keyword">const</span> arr2 = arr1.slice()</span><br><span class="line"></span><br><span class="line">arr1[<span class="number">2</span>].push(<span class="string">&#x27;ppp&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr1)   <span class="comment">//[0, 1, [3, &#x27;ppp&#x27;]]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr2)   <span class="comment">//[0, 1, [3, &#x27;ppp&#x27;]]</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：这种方法也是有缺点的，数组为一维数组是深拷贝，大于一维的都是浅拷贝。concat方法也是一样，不在赘述。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/22/js%E6%B7%B1%E6%8B%B7%E8%B4%9D/">展开全文 >></a>
         </p>
       
 
