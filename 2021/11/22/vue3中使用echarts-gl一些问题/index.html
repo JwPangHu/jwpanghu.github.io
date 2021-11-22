@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | 叫我胖虎</title>
+  <title>vue3中使用Echarts-gl一些问题 | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="叫我胖虎的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="叫我胖虎">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="Echarts的安装 首先安装echarts，这里使用的4.9.0版本 ( 注意：在vue3这里不要用cnpm！尽量使用npm，会出现很多莫名问题)。 npm i echarts –save   在项目中引入 import * as echarts from ‘echarts’;这种写法是把所有的输出包裹到echarts对象里    代码实现在因为vue3中没有this，app.vue中使用pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3中使用Echarts-gl一些问题">
+<meta property="og:url" content="http://example.com/2021/11/22/vue3%E4%B8%AD%E4%BD%BF%E7%94%A8echarts-gl%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="叫我胖虎的博客">
+<meta property="og:description" content="Echarts的安装 首先安装echarts，这里使用的4.9.0版本 ( 注意：在vue3这里不要用cnpm！尽量使用npm，会出现很多莫名问题)。 npm i echarts –save   在项目中引入 import * as echarts from ‘echarts’;这种写法是把所有的输出包裹到echarts对象里    代码实现在因为vue3中没有this，app.vue中使用pro">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/echarts%E6%8A%A5%E9%94%99.png">
+<meta property="article:published_time" content="2021-11-22T09:35:36.000Z">
+<meta property="article:modified_time" content="2021-11-22T10:11:41.260Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/echarts%E6%8A%A5%E9%94%99.png">
   
     <link rel="alternative" href="/atom.xml" title="叫我胖虎" type="application/atom+xml">
   
@@ -157,37 +161,87 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-vue3中使用echarts-gl一些问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/22/vue3%E4%B8%AD%E4%BD%BF%E7%94%A8echarts-gl%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2021-11-22T09:35:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/22/vue3%E4%B8%AD%E4%BD%BF%E7%94%A8echarts-gl%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/">vue3中使用Echarts-gl一些问题</a>
+    <h1 class="article-title" itemprop="name">
+      vue3中使用Echarts-gl一些问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2021/11/22/vue3%E4%B8%AD%E4%BD%BF%E7%94%A8echarts-gl%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2021-11-22T09:35:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Echarts的安装"><a href="#Echarts的安装" class="headerlink" title="Echarts的安装"></a>Echarts的安装</h3><ol>
+<li>首先安装echarts，这里使用的4.9.0版本 ( 注意：在vue3这里不要用cnpm！尽量使用npm，会出现很多莫名问题)。<blockquote>
+<p>npm i echarts –save</p>
+</blockquote>
+</li>
+<li>在项目中引入<blockquote>
+<p>import * as echarts from ‘echarts’;<br>这种写法是把所有的输出包裹到echarts对象里</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>在因为vue3中没有this，app.vue中使用provide把echarts引进来，在子组件中使用inject使用echarts。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> echarts <span class="keyword">from</span> <span class="string">&#x27;echarts&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; provide &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&#x27;App&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        provide(<span class="string">&#x27;ec&#x27;</span>,echarts)<span class="comment">//provide</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>子组件中使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; inject, onMounted &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> echarts = inject(<span class="string">&quot;ec&quot;</span>);<span class="comment">//引入</span></span><br><span class="line">    onMounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//因为需要获取到dom,所以是onMounted的函数中实现我们的功能</span></span><br><span class="line">        <span class="comment">// 基于准备好的dom，初始化echarts实例</span></span><br><span class="line">        <span class="keyword">var</span> myChart = echarts.init(<span class="built_in">document</span>.getElementById(<span class="string">&#x27;main&#x27;</span>));</span><br><span class="line">        <span class="comment">// 绘制图表</span></span><br><span class="line">        myChart.setOption(&#123;</span><br><span class="line">            title: &#123;</span><br><span class="line">                text: <span class="string">&#x27;ECharts 入门示例&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            tooltip: &#123;&#125;,</span><br><span class="line">            xAxis: &#123;</span><br><span class="line">                data: [<span class="string">&#x27;衬衫&#x27;</span>, <span class="string">&#x27;羊毛衫&#x27;</span>, <span class="string">&#x27;雪纺衫&#x27;</span>, <span class="string">&#x27;裤子&#x27;</span>, <span class="string">&#x27;高跟鞋&#x27;</span>, <span class="string">&#x27;袜子&#x27;</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            yAxis: &#123;&#125;,</span><br><span class="line">            series: [</span><br><span class="line">                &#123;</span><br><span class="line">                name: <span class="string">&#x27;销量&#x27;</span>,</span><br><span class="line">                type: <span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">                data: [<span class="number">5</span>, <span class="number">20</span>, <span class="number">36</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">20</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="comment">//自适应大小</span></span><br><span class="line">            myChart.resize();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Echarts-gl的安装"><a href="#Echarts-gl的安装" class="headerlink" title="Echarts-gl的安装"></a>Echarts-gl的安装</h3><blockquote>
+<p>npm install echarts-gl –save </p>
+</blockquote>
+<p>然后在官网找的例子在使用的时候报错。<br><img src="/img/echarts%E6%8A%A5%E9%94%99.png"></p>
+<p>通过查找发现是版本不匹配问题导致的。上面使用的echart是4.9.0本版，然后安装<a href="mailto:&#101;&#x63;&#104;&#x61;&#x72;&#x74;&#115;&#45;&#x67;&#108;&#x40;&#49;&#x2e;&#x31;&#46;&#48;">&#101;&#x63;&#104;&#x61;&#x72;&#x74;&#115;&#45;&#x67;&#108;&#x40;&#49;&#x2e;&#x31;&#46;&#48;</a>版本，这是相对应。</p>
+<blockquote>
+<p>npm install <a href="mailto:&#x65;&#x63;&#x68;&#97;&#114;&#x74;&#x73;&#45;&#103;&#108;&#x40;&#49;&#x2e;&#x31;&#46;&#x30;">&#x65;&#x63;&#x68;&#97;&#114;&#x74;&#x73;&#45;&#103;&#108;&#x40;&#49;&#x2e;&#x31;&#46;&#x30;</a> –save </p>
+</blockquote>
+<p>之后又有一个问题 axis.getLabelsCoords is not a function（忘了截图了）<br>通过查找资料发现：</p>
+<blockquote>
+<p>“echarts”: “^4.9.0”,     “echarts-gl”: “^1.1.2”,<br> “echarts”: “^5.2.0”,    “echarts-gl”: “^2.0.8”,</p>
+</blockquote>
+<p>因为我们使用的echarts 4.9.0版本，所以相对应的echart-gl版本也要1.1.2版本以上。</p>
+<blockquote>
+<p>npm install <a href="mailto:&#x65;&#x63;&#x68;&#97;&#114;&#x74;&#115;&#45;&#103;&#x6c;&#64;&#x31;&#46;&#49;&#x2e;&#50;">&#x65;&#x63;&#x68;&#97;&#114;&#x74;&#115;&#45;&#103;&#x6c;&#64;&#x31;&#46;&#49;&#x2e;&#50;</a> –save </p>
+</blockquote>
+<h3 id="完美解决！！！"><a href="#完美解决！！！" class="headerlink" title="完美解决！！！"></a>完美解决！！！</h3>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -200,356 +254,103 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/22/vue3%E4%B8%AD%E4%BD%BF%E7%94%A8echarts-gl%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/11/TypeScript%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2021-11-11T09:38:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-11</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/11/11/TypeScript%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TypeScript中的泛型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/11/TypeScript%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B/">TypeScript中的泛型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ts//" class="article-tag-list-link color3">ts</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/10/18/Vue3%20composition%20%E7%BB%84%E5%90%88%E5%BC%8Fapi/" class="archive-article-date">
-  	<time datetime="2021-10-18T08:28:43.684Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-18</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/10/14/nodemon%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-10-14T10:39:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-14</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/10/14/nodemon%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0/">nodemon核心原理实现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Nodejs//" class="article-tag-list-link color2">Nodejs</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/22/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2021-09-22T09:29:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/22/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">原生js实现数组方法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/02/%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E4%B8%8BPromis-all/" class="archive-article-date">
-  	<time datetime="2021-09-02T09:18:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/02/%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E4%B8%8BPromis-all/">自己实现下Promis.all</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/12/Vue%E4%BB%A3%E7%90%86Data/" class="archive-article-date">
-  	<time datetime="2021-08-12T09:50:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/12/Vue%E4%BB%A3%E7%90%86Data/">Vue2代理Data</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/" class="archive-article-date">
-  	<time datetime="2021-08-11T09:48:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/">Vue中自定义指令，在图片未完成加载前用随机背景色占位</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-08-09T09:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Vue中computed的实现原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/" class="archive-article-date">
-  	<time datetime="2021-07-23T09:16:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/23/Nodejs%E9%93%BE%E6%8E%A5Mysql/">Nodejs链接Mysql</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js、Nodejs//" class="article-tag-list-link color5">js、Nodejs</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -573,8 +374,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
