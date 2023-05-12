@@ -159,6 +159,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="hexo推送部署报错-failed解决" class="article article-type-hexo推送部署报错  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/05/12/failed%E8%A7%A3%E5%86%B3/">hexo推送部署报错 err: Error: Spawn failed解决</a>
+    </h1>
+  
+
+        
+        <a href="/2023/05/12/failed%E8%A7%A3%E5%86%B3/" class="archive-article-date">
+  	<time datetime="2023-05-12T02:41:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>很久没写博客了，突然心血来潮就来看了看，然后突然发现报错推送不上去了<br>报错信息如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FATAL &#123;</span><br><span class="line">  err: <span class="built_in">Error</span>: Spawn failed</span><br><span class="line">      at ChildProcess.&lt;anonymous&gt; (D:\wwwroot\Hexo-Blog\node_modules\hexo-util\lib\spawn.js:<span class="number">51</span>:<span class="number">21</span>)</span><br><span class="line">      at ChildProcess.emit (node:events:<span class="number">513</span>:<span class="number">28</span>)</span><br><span class="line">      at ChildProcess.cp.emit (D:\wwwroot\Hexo-Blog\node_modules\cross-spawn\lib\enoent.js:<span class="number">34</span>:<span class="number">29</span>)</span><br><span class="line">      at Process.ChildProcess._handle.onexit (node:internal/child_process:<span class="number">291</span>:<span class="number">12</span>) &#123;</span><br><span class="line">    code: <span class="number">128</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125; Something<span class="string">&#x27;s wrong. Maybe you can find the solution here: %s https://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p>不信邪又重新hexo d推送了很多次 还是报错，然后网上寻求解决方案，找到多种解决方案。</p>
+<h5 id="第1种解决方案"><a href="#第1种解决方案" class="headerlink" title="第1种解决方案"></a>第1种解决方案</h5><blockquote>
+<p>网上出现最多的一种方案，但是无奈 试了好几遍还是无法解决问题</p>
+</blockquote>
+<ol>
+<li>在博客文件夹(通常是<strong>\blog</strong>)中删除掉 .deploy_git 文件</li>
+<li>命令行(terminal)[不推荐使用cmd, 使用 git bash 等] 中输入 git config –global core.autocrlf false把git加入系统环境变量</li>
+<li>重新执行hexo c hexo g hexo d</li>
+</ol>
+<h5 id="第2种解决方案"><a href="#第2种解决方案" class="headerlink" title="第2种解决方案"></a>第2种解决方案</h5><p>修改 _config.yml 文件，将配置地址http方式切换成ssh方式</p>
+<blockquote>
+<p>但是看了看 我当初部署项目用的就是ssh的方式，看来又不是这个问题</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">repo: https://github.com/yourname/yourname.github.io.git -&gt; git@github.com:a956551943/weixiaohui.github.io.git</span><br><span class="line">​</span><br><span class="line">branch: master</span><br><span class="line">​</span><br><span class="line">##最后</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="第3种解决方案"><a href="#第3种解决方案" class="headerlink" title="第3种解决方案"></a>第3种解决方案</h5><p>强制推送</p>
+<blockquote>
+<p>试了试还是推送不成功</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#进入depoly文件夹</span></span></span><br><span class="line">cd .deploy_git/</span><br><span class="line">​</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#强制推送</span></span></span><br><span class="line">git push -f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="最终：网上的方案找了半天还是没找到，基本都是这三种，都没解决问题，不过也从这个强制推送找到了问腿，那就是推送失败可能是我电脑的ssh存在问题。"><a href="#最终：网上的方案找了半天还是没找到，基本都是这三种，都没解决问题，不过也从这个强制推送找到了问腿，那就是推送失败可能是我电脑的ssh存在问题。" class="headerlink" title="最终：网上的方案找了半天还是没找到，基本都是这三种，都没解决问题，不过也从这个强制推送找到了问腿，那就是推送失败可能是我电脑的ssh存在问题。"></a>最终：网上的方案找了半天还是没找到，基本都是这三种，都没解决问题，不过也从这个强制推送找到了问腿，那就是推送失败可能是我电脑的ssh存在问题。</h3><h3 id="后来想了想刚开始公司用的是svn，后来换成了git，也重新设置了git的账户和邮箱"><a href="#后来想了想刚开始公司用的是svn，后来换成了git，也重新设置了git的账户和邮箱" class="headerlink" title="后来想了想刚开始公司用的是svn，后来换成了git，也重新设置了git的账户和邮箱"></a>后来想了想刚开始公司用的是svn，后来换成了git，也重新设置了git的账户和邮箱</h3><p>查看下用户名和邮箱，回想一下确实和以前不一样了。看来问题确实在这。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name </span><br><span class="line">git config user.emial</span><br></pre></td></tr></table></figure>
+<p>然后重新根据当前有限生成密钥</p>
+<blockquote>
+<p>ssh-keygen -t rsa -C ‘你的邮箱’，然后查看在windows下查看[c盘-&gt;用户-&gt;自己的用户名-&gt;.ssh下的文件id_rsa、id_rsa.pub文件。重新在git新增ssh-key，然后运行。还是失败。。。。。。</p>
+</blockquote>
+<h3 id="后来干脆直接把github以前的ssh-key删除-还有本地的-ssh下的文件id-rsa、id-rsa-pub文件和known-hosts也删除，然后重新生成。再次推送，成功。。。。。那看来是known-hosts的问题"><a href="#后来干脆直接把github以前的ssh-key删除-还有本地的-ssh下的文件id-rsa、id-rsa-pub文件和known-hosts也删除，然后重新生成。再次推送，成功。。。。。那看来是known-hosts的问题" class="headerlink" title="后来干脆直接把github以前的ssh-key删除 还有本地的.ssh下的文件id_rsa、id_rsa.pub文件和known_hosts也删除，然后重新生成。再次推送，成功。。。。。那看来是known_hosts的问题"></a>后来干脆直接把github以前的ssh-key删除 还有本地的.ssh下的文件id_rsa、id_rsa.pub文件和known_hosts也删除，然后重新生成。再次推送，成功。。。。。那看来是known_hosts的问题</h3><blockquote>
+<p>后来查了查known_hosts这个文件究竟有什么用？里面放的是什么内容？</p>
+</blockquote>
+<blockquote>
+<p>ssh会把你每个你访问过计算机的公钥(public key)都记录在known_hosts。当下次访问相同计算机时，OpenSSH会核对公钥。如果公钥不同，OpenSSH会发出警告， 避免你受到DNS Hijack之类的攻击。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2023/05/12/failed%E8%A7%A3%E5%86%B3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-实现项目部署后通知前端更新" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -832,90 +929,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Vue中computed的实现原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Vue中computed的实现原理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-08-09T09:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在使用vue的开发中经常会使用到 computed，为我们开发带来了很大的便利，利用computed能更大程度上简化我们的代码，他和Vue中另一个api侦听器 watch比较，在某些方面比较相近的。</p>
-<h4 id="用法例子"><a href="#用法例子" class="headerlink" title="用法例子"></a>用法例子</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;fullName&#125;&#125;</span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">        firstName: <span class="string">&#x27;jw&#x27;</span>,</span><br><span class="line">        lastName: <span class="string">&#x27;panghu&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        <span class="function"><span class="title">fullName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.firstName + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.lastName</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>不需要再模板里直接去计算undefined undefined，不要页面中使用大量复杂的逻辑表达式处理数据（别人一看，心里一万头🐎奔过），这样会让模板本身过重，会对后期页面维护造成影响。computed主要也是为了解决类似的问题。</p>
-<blockquote>
-<p>computed与watch的区别</p>
-</blockquote>
-<ol>
-<li>computed 是计算一个新的属性,并且会把这个属性挂在到vue实例上，watch是监控实例上已有的属性变化。所以以可以监控computed</li>
-<li>computed本质是惰性的，具有缓存性，第一次访问时会计算值，其他时候会缓存下来，比如一个多出使用computed同一个属性，也只会执行一次，只有当他依赖的属性发生变化时才会重新执行。而watch只要当数据变化，就会执行相对应的函数。</li>
-<li>从使用场景上来说，computed适用一个数据被多个数据影响的情况，watch适用一个数据的变化去影响到多个数据。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/09/Vue%E4%B8%ADcomputed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">展开全文 >></a>
         </p>
       
 
