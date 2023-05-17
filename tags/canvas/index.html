@@ -6,17 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Vue中watch的简单实现原理 | 叫我胖虎</title>
+  <title>Tag: canvas | 叫我胖虎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概念 watch的作用可以监控一个值的变换，并调用因为变化需要执行的方法。可以通过watch动态改变关联的状态。  简单实现12345678910111213141516171819202122232425262728293031323334353637383940class watcher &amp;#123;    constructor(opts) &amp;#123;        this.$data">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Vue中watch的简单实现原理">
-<meta property="og:url" content="http://example.com/2021/05/20/Vue%E4%B8%ADwatch%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/index.html">
+  <meta name="description" content="叫我胖虎的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叫我胖虎">
+<meta property="og:url" content="http://example.com/tags/canvas/index.html">
 <meta property="og:site_name" content="叫我胖虎">
-<meta property="og:description" content="概念 watch的作用可以监控一个值的变换，并调用因为变化需要执行的方法。可以通过watch动态改变关联的状态。  简单实现12345678910111213141516171819202122232425262728293031323334353637383940class watcher &amp;#123;    constructor(opts) &amp;#123;        this.$data">
+<meta property="og:description" content="叫我胖虎的博客">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-20T00:53:24.000Z">
-<meta property="article:modified_time" content="2021-10-18T08:30:05.020Z">
 <meta property="article:author" content="jwPangHu">
 <meta property="article:tag" content="web前端,javascript,html,css,vue,react,小程序">
 <meta name="twitter:card" content="summary">
@@ -159,182 +157,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Vue中watch的简单实现原理" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Vue中watch的简单实现原理
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2023/05/17/%E7%94%A8canvas%E6%9D%A5%E6%B8%B2%E6%9F%93%E8%A7%86%E9%A2%91/" class="archive-article-date">
+  	<time datetime="2023-05-17T09:45:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-17</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2023/05/17/%E7%94%A8canvas%E6%9D%A5%E6%B8%B2%E6%9F%93%E8%A7%86%E9%A2%91/">用canvas来渲染视频</a>
     </h1>
   
 
-        
-        <a href="/2021/05/20/Vue%E4%B8%ADwatch%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-05-20T00:53:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ol>
-<li>watch的作用可以监控一个值的变换，并调用因为变化需要执行的方法。可以通过watch动态改变关联的状态。</li>
-</ol>
-<h3 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">watcher</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">opts</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.$data = opts.data</span><br><span class="line">        <span class="built_in">this</span>.$watch = opts.watch</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> opts.data) &#123;</span><br><span class="line">            <span class="built_in">this</span>.proxy(key, opts.data[key])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">proxy</span>(<span class="params">_key, _val</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(<span class="built_in">this</span>, _key, &#123;</span><br><span class="line">            <span class="function"><span class="title">get</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.$data[_key]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">set</span>(<span class="params">val</span>)</span> &#123;</span><br><span class="line">               <span class="keyword">const</span> oldVal = <span class="built_in">this</span>.$data[_key]</span><br><span class="line">               <span class="keyword">if</span>(oldVal === val) <span class="keyword">return</span> val</span><br><span class="line">               <span class="built_in">this</span>.$data[_key] = val </span><br><span class="line">               <span class="built_in">this</span>.$watch[_key] &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">this</span>.$watch[_key] === <span class="string">&#x27;function&#x27;</span> &amp;&amp; (</span><br><span class="line">                   <span class="built_in">this</span>.$watch[_key].call(<span class="built_in">this</span>, val, oldVal)</span><br><span class="line">               )</span><br><span class="line">               <span class="keyword">return</span> val</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> watcher(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">        inner: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">        <span class="function"><span class="title">inner</span>(<span class="params">newVal, oldVal</span>)</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(newVal, oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    vm.inner = <span class="number">2</span></span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">canvas</a>
         		</li>
       		
 		</ul>
 	</div>
 
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/05/20/Vue%E4%B8%ADwatch%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/05/24/js%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E5%AE%9E%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          js快速排序实现
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/05/11/js%E5%AE%8F%E4%BB%BB%E5%8A%A1-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">js宏任务-微任务执行顺序</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -357,9 +233,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

@@ -159,6 +159,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-用canvas来渲染视频" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/05/17/%E7%94%A8canvas%E6%9D%A5%E6%B8%B2%E6%9F%93%E8%A7%86%E9%A2%91/">用canvas来渲染视频</a>
+    </h1>
+  
+
+        
+        <a href="/2023/05/17/%E7%94%A8canvas%E6%9D%A5%E6%B8%B2%E6%9F%93%E8%A7%86%E9%A2%91/" class="archive-article-date">
+  	<time datetime="2023-05-17T09:45:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近有个需求用到了canvas，然后就研究了下，在使用canvas的drawImage API的时候，发现这个也能用来渲染视频。</p>
+<h3 id="效果和视频一样"><a href="#效果和视频一样" class="headerlink" title="效果和视频一样"></a>效果和视频一样</h3><!-- ![](img/1.gif) -->
+<img src="img/1.gif" width="120" height="220">
+
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p> 每隔一段时间截取视频的当前帧，绘制出来。就是这么简单</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;c2&quot;</span> <span class="attr">width</span>=<span class="string">&quot;180&quot;</span> <span class="attr">height</span>=<span class="string">&quot;320&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> video = <span class="built_in">document</span>.createElement(<span class="string">&#x27;video&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    video.src = <span class="string">&#x27;./1.mp4&#x27;</span>;</span></span><br><span class="line">    video.width = 180;</span><br><span class="line">    video.height = 320;</span><br><span class="line"><span class="javascript">    video.muted = <span class="literal">true</span>;  <span class="comment">// 静音</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 比较常规的做法是，为video标签设置muted属性，使它静音，这样视频就能自动播放了，但是没有声音:</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&quot;c2&quot;</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ctx= canvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> i = <span class="literal">null</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// video.autoplay = true;</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="comment">// 在最新版的Chrome浏览器（以及所有以Chromium为内核的浏览器）中，已不再允许自动播放音频和视频。就算你为video或audio标签设置了autoplay属性也一样不能自动播放。</span></span></span><br><span class="line">        video.play();</span><br><span class="line">    &#125;, 2000);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="comment">// 每20ms截取视频帧</span></span></span><br><span class="line"><span class="javascript">    video.addEventListener(<span class="string">&#x27;play&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        i = <span class="built_in">window</span>.setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line">            ctx.drawImage(video,0,0, 180, 320)</span><br><span class="line">        &#125;,20);</span><br><span class="line"><span class="javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line">    </span><br><span class="line"><span class="javascript">    video.addEventListener(<span class="string">&#x27;pause&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.clearInterval(i);</span></span><br><span class="line"><span class="javascript">        i = <span class="literal">null</span>;</span></span><br><span class="line"><span class="javascript">    &#125;,<span class="literal">false</span>);</span></span><br><span class="line">    </span><br><span class="line"><span class="javascript">    video.addEventListener(<span class="string">&#x27;ended&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">clearInterval</span>(i);</span></span><br><span class="line"><span class="javascript">        i = <span class="literal">null</span>;</span></span><br><span class="line"><span class="javascript">    &#125;,<span class="literal">false</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">canvas</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2023/05/17/%E7%94%A8canvas%E6%9D%A5%E6%B8%B2%E6%9F%93%E8%A7%86%E9%A2%91/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="hexo推送部署报错-failed解决" class="article article-type-hexo推送部署报错  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -884,80 +964,6 @@
 
 
   
-    <article id="post-Vue中自定义指令，在图片未完成加载前用随机背景色占位" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/">Vue中自定义指令，在图片未完成加载前用随机背景色占位</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/" class="archive-article-date">
-  	<time datetime="2021-08-11T09:48:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>使用Vue中的自定义指令API解决图片未完成加载前的空白问题，用随机的背景色占位。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-img=<span class="string">&quot;url&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">Vue.directive(<span class="string">&#x27;img&#x27;</span>, &#123;</span><br><span class="line">    <span class="function"><span class="title">inserted</span>(<span class="params">el, binding</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> color = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">1000000</span>)</span><br><span class="line">        el.style.backgroundColor = <span class="string">&#x27;#&#x27;</span> + color</span><br><span class="line">        <span class="keyword">let</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">        img.src = binding.value</span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            el.style.backgroundColor = <span class="string">&#x27;url(&#x27;</span> + binding.value + <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Vue2//" class="article-tag-list-link color5">Vue2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/11/Vue%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%EF%BC%8C%E5%9C%A8%E5%9B%BE%E7%89%87%E6%9C%AA%E5%AE%8C%E6%88%90%E5%8A%A0%E8%BD%BD%E5%89%8D%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%83%8C%E6%99%AF%E8%89%B2%E5%8D%A0%E4%BD%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1052,6 +1058,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">canvas</a>
               </li>
             
             <div class="clearfix"></div>
